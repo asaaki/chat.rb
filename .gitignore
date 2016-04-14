@@ -1,4 +1,2 @@
-.DS_Store
-.ruby-gemset
-.ruby-version
 chat.log
+Gemfile.lock
