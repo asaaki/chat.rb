@@ -1,0 +1,4 @@
+#!/bin/sh
+# RACK_ENV=production bundle exec unicorn -I lib -p 3000
+# RACK_ENV=production bundle exec thin -p 3000 -e production start
+RACK_ENV=production bundle exec puma -I lib -p 3000 -e production
