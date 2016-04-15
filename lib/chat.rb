@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cgi'
 require 'time'
 require 'yaml/store'
@@ -27,7 +29,7 @@ module Chat
 
   # storage
   class Store
-    DEFAULT_FILENAME = 'chat.log'.freeze
+    DEFAULT_FILENAME = 'chat.log'
     DEFAULT_COUNT = 50
 
     def initialize(filename = DEFAULT_FILENAME)
@@ -65,6 +67,7 @@ module Chat
   # request cycle
   class Request
     HEADERS = { 'Content-Type' => 'text/html' }.freeze
+    REQUEST_PARAMS = %w(nickname message).freeze
 
     FORBIDDEN_ELEMENTS = %w(
       ! % xml
@@ -104,8 +107,9 @@ module Chat
     private
 
     def process_post_data
-      @nickname = @request.params['nickname']
-      @message = @request.params['message']
+      # @nickname = @request.params['nickname']
+      # @message = @request.params['message']
+      @nickname, @message = @request.params.values_at(*REQUEST_PARAMS)
     end
 
     def write_log
@@ -118,7 +122,6 @@ module Chat
     end
 
     def log_line
-      # "[#{timestamp}] #{escape(@nickname)}: #{escape(@message)}"
       [timestamp, escape(@nickname), escape(@message)]
     end
 
@@ -161,7 +164,7 @@ module Chat
       end.join("\n")
     end
 
-    LOG_LINE = <<-LOG_LINE.freeze
+    LOG_LINE = <<-LOG_LINE
           <p class='line'>
             <time class='ts' datetime='%{ts}'>[%{ts}]</time>
             <span class='nick'>%{nick}</span>
@@ -169,7 +172,7 @@ module Chat
           </p>
     LOG_LINE
 
-    PAGE_TEMPLATE = <<-PAGE_TEMPLATE.freeze
+    PAGE_TEMPLATE = <<-PAGE_TEMPLATE
 <!DOCTYPE html>
 <html>
   <head>
