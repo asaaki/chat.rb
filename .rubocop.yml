@@ -1,0 +1,36 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+
+# While I appreciate good documented code I don't like the enforcements
+# for top-level modules/classes. This relaxes the issue.
+Style/Documentation:
+  Enabled: false
+
+# Fixed setting, because this changed in rubocop versions
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/CollectionMethods:
+  PreferredMethods:
+    # to be more in line with find_all->select:
+    find: detect
+
+# Fixed setting, because this changed in rubocop versions
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+# .inject/.reduce works pretty fine in all common cases without weird coding.
+# Reducing an array without extra accumulator statement example:
+#   my_coll.reduce([]) { |a, e| a.push(e) }
+# This is also not a style guide recommendation (just rubocop).
+Style/EachWithObject:
+  Enabled: false
+
+# 80 is not contemporary anymore.
+# At least we should allow something wider as a real hard limit,
+# everybody can still set their editor to 80 for personal soft limiting.
+Metrics/LineLength:
+  Max: 120
