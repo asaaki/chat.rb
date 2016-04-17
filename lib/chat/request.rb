@@ -43,8 +43,6 @@ module Chat
     private
 
     def process_post_data
-      # @nickname = @request.params['nickname']
-      # @message = @request.params['message']
       @nickname, @message = @request.params.values_at(*REQUEST_PARAMS)
     end
 
@@ -78,7 +76,7 @@ module Chat
     end
 
     def recent_log_lines
-      @store.get_lines
+      @store.last_lines
     end
   end
 end

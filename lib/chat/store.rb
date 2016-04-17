@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 module Chat
-  # storage
+  # storage (yaml pstore)
   class Store
-    DEFAULT_FILENAME = 'chat.log'
-    DEFAULT_COUNT = 50
-
-    def initialize(filename = nil)
-      @store = YAML::Store.new(filename || DEFAULT_FILENAME)
+    def initialize(filename, maxlines)
+      @store = YAML::Store.new(filename)
+      @maxlines = maxlines
       init_log
     end
 
@@ -14,8 +12,8 @@ module Chat
       write_transaction { log.push(line) }
     end
 
-    def get_lines(line_count = DEFAULT_COUNT)
-      read_transaction { log.last(line_count) }
+    def last_lines
+      read_transaction { log.last(@maxlines) }
     end
 
     private

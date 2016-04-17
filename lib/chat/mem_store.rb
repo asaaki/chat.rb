@@ -2,18 +2,17 @@
 module Chat
   # storage (in-memory)
   class MemStore
-    DEFAULT_COUNT = 50
-
-    def initialize(_filename = nil)
+    def initialize(_filename, maxlines)
       @store = []
+      @maxlines = maxlines
     end
 
     def add_line(line)
       @store.push(line)
     end
 
-    def get_lines(line_count = DEFAULT_COUNT)
-      @store.last(line_count)
+    def last_lines
+      @store.last(@maxlines)
     end
   end
 end
